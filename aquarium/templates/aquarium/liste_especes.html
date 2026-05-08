@@ -1,0 +1,105 @@
+{% extends 'aquarium/base.html' %}
+{% block content %}
+<style>
+    .filters-bar {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="filters-bar">
+    <form method="GET" action="{% url 'liste_especes' %}" class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label for="q" class="form-label">Recherche</label>
+            <input
+                id="q"
+                class="form-control"
+                type="search"
+                name="q"
+                value="{{ query }}"
+                placeholder="Rechercher une espece..."
+            >
+        </div>
+
+        <div class="col-md-3">
+            <label for="type_eau" class="form-label">Type d'eau</label>
+            <select id="type_eau" name="type_eau" class="form-select">
+                <option value="">Tous</option>
+                {% for value, label in type_eau_choices %}
+                <option value="{{ value }}" {% if selected_type_eau == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="bassin" class="form-label">Bassin</label>
+            <select id="bassin" name="bassin" class="form-select">
+                <option value="">Tous</option>
+                {% for bassin in bassins %}
+                <option value="{{ bassin.id }}" {% if selected_bassin == bassin.id|stringformat:"s" %}selected{% endif %}>
+                    {{ bassin.nom_bassin }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2 d-grid">
+            <button class="btn btn-primary" type="submit">Appliquer</button>
+        </div>
+    </form>
+
+    <form method="GET" action="{% url 'liste_especes' %}" class="mt-2">
+        <button class="btn btn-outline-secondary btn-sm" type="submit">Reinitialiser</button>
+    </form>
+</div>
+
+<h2 class="mb-4">Liste des especes</h2>
+
+<div class="row">
+    {% for e in especes %}
+    <div class="col-md-4">
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ e.nom_commun }}
+                </h5>
+
+                <p class="card-text">
+                    <strong>Nom scientifique:</strong> {{ e.nom_scientifique }} <br>
+                    <strong>Famille:</strong> {{ e.famille }}
+                </p>
+
+                {% if e.bassin.type_eau == "salee" %}
+                <span class="badge bg-primary">Salee</span>
+                {% elif e.bassin.type_eau == "douce" %}
+                <span class="badge bg-success">Douce</span>
+                {% else %}
+                <span class="badge bg-warning">Saumatre</span>
+                {% endif %}
+
+                <br><br>
+
+                <a href="{% url 'detail_espece' e.id %}" class="btn btn-sm btn-outline-primary">
+                    Voir details
+                </a>
+
+                <a href="{% url 'modifier_espece' e.id %}" class="btn btn-sm btn-outline-warning">
+                    Modifier
+                </a>
+
+                {% if perms.aquarium.delete_espece %}
+                <a href="{% url 'supprimer_espece' e.id %}" class="btn btn-sm btn-outline-danger">
+                    Supprimer
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">
+        Aucune espece trouvee.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

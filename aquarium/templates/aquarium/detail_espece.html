@@ -1,0 +1,59 @@
+{% extends 'aquarium/base.html' %} {% block content %}
+
+<h2 class="mb-4">Détails de l’espèce 🐠</h2>
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <h3 class="card-title">
+            {{ espece.nom_commun }}
+        </h3>
+
+        <hr>
+
+        <p>
+            <strong>Nom scientifique:</strong> {{ espece.nom_scientifique }}
+        </p>
+
+        <p>
+            <strong>Famille:</strong> {{ espece.famille }}
+        </p>
+
+        <p>
+            <strong>Statut:</strong> {{ espece.statut }}
+        </p>
+
+        <p>
+            <strong>Bassin:</strong> {{ espece.bassin.nom_bassin }}
+        </p>
+
+        <p>
+            <strong>Type d’eau:</strong> {% if espece.bassin.type_eau == "salee" %}
+            <span class="badge bg-primary">Salée</span> {% elif espece.bassin.type_eau == "douce" %}
+            <span class="badge bg-success">Douce</span> {% else %}
+            <span class="badge bg-warning">Saumâtre</span> {% endif %}
+        </p>
+
+        <p>
+            <strong>Température bassin:</strong> {{ espece.bassin.temperature_actuelle }} °C
+        </p>
+
+        <hr>
+
+        <a href="{% url 'modifier_espece' espece.id %}" class="btn btn-warning">
+            Modifier ✏️
+        </a> {% if perms.aquarium.delete_espece %}
+        <a href="{% url 'supprimer_espece' espece.id %}" class="btn btn-danger">
+            Supprimer 🗑️
+        </a> {% endif %}
+
+        <a href="{% url 'liste_especes' %}" class="btn btn-secondary">
+            Retour 🔙
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

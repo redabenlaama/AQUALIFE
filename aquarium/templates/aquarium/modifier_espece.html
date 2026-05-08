@@ -1,0 +1,28 @@
+{% extends 'aquarium/base.html' %} {% block content %}
+
+<h2>Modifier espèce ✏️</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="nom" value="{{ espece.nom_commun }}" class="form-control mb-2">
+
+    <input type="text" name="scientifique" value="{{ espece.nom_scientifique }}" class="form-control mb-2">
+
+    <input type="text" name="famille" value="{{ espece.famille }}" class="form-control mb-2">
+
+    <input type="text" name="statut" value="{{ espece.statut }}" class="form-control mb-2">
+
+    <select name="bassin" class="form-control mb-2">
+        {% for b in bassins %}
+            <option value="{{ b.id }}"
+                {% if b.id == espece.bassin.id %}selected{% endif %}>
+                {{ b.nom_bassin }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button class="btn btn-warning">Modifier</button>
+</form>
+
+{% endblock %}

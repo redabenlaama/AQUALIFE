@@ -1,0 +1,46 @@
+{% extends 'aquarium/base.html' %} {% block content %}
+
+<h2 class="mb-4">Liste des bassins 🐠</h2>
+
+<div class="row ">
+
+    {% for b in bassins %}
+
+    <div class="col-md-4 ">
+
+        <div class="card mb-3 shadow-sm ">
+
+            <div class="card-body ">
+
+                <h5>{{ b.nom_bassin }}</h5>
+
+                <p>
+                    <strong>Type d’eau:</strong> {% if b.type_eau == "salee " %}
+                    <span class="badge bg-primary ">Salée</span> {% elif b.type_eau == "douce " %}
+                    <span class="badge bg-success ">Douce</span> {% else %}
+                    <span class="badge bg-warning ">Saumâtre</span> {% endif %}
+                </p>
+
+                <p>
+                    <strong>Température:</strong> {{ b.temperature_actuelle }} °C
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="alert alert-warning ">
+        Aucun bassin trouvé 😕
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+
+{% endblock %}

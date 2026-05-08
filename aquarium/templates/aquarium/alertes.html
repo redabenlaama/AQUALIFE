@@ -1,0 +1,15 @@
+{% extends 'aquarium/base.html' %} {% block content %}
+
+<h2>Alertes ⚠️</h2>
+
+{% if alertes %} {% for a in alertes %}
+<div class="alert alert-danger">
+    {{ a }}
+</div>
+{% endfor %} {% else %}
+
+<div class="alert alert-success">
+    Tout est normal ✅
+</div>
+
+{% endif %} {% endblock %}

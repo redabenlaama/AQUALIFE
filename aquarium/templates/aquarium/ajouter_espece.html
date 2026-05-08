@@ -1,0 +1,25 @@
+{% extends 'aquarium/base.html' %} {% block content %}
+
+<h2>Ajouter une espèce 🐠</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="nom" class="form-control mb-2" placeholder="Nom commun">
+
+    <input type="text" name="scientifique" class="form-control mb-2" placeholder="Nom scientifique">
+
+    <input type="text" name="famille" class="form-control mb-2" placeholder="Famille">
+
+    <input type="text" name="statut" class="form-control mb-2" placeholder="Statut">
+
+    <select name="bassin" class="form-control mb-2">
+        {% for b in bassins %}
+            <option value="{{ b.id }}">{{ b.nom_bassin }}</option>
+        {% endfor %}
+    </select>
+
+    <button class="btn btn-primary">Ajouter</button>
+</form>
+
+{% endblock %}

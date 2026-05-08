@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+db.sqlite3
+media/
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.gif
+.DS_Store
