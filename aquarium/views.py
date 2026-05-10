@@ -136,7 +136,7 @@ def ajouter_bassin(request):
         type_eau = request.POST.get('type_eau')
         temperature = request.POST.get('temperature')
 
-        # 🔥 validation بسيطة
+      
         if not volume:
             return render(request, 'aquarium/ajouter_bassin.html', {
                 'error': "Volume obligatoire"
@@ -161,10 +161,10 @@ def alertes(request):
 
     for b in bassins:
         if b.temperature_actuelle > 30:
-            alertes.append(f"⚠️ {b.nom_bassin} température trop élevée")
+            alertes.append(f" {b.nom_bassin} température trop élevée")
 
         if b.temperature_actuelle < 10:
-            alertes.append(f"❄️ {b.nom_bassin} température trop basse")
+            alertes.append(f" {b.nom_bassin} température trop basse")
 
     return render(request, 'aquarium/alertes.html', {
         'alertes': alertes
